@@ -1,0 +1,24 @@
+
+# Logs
+log
+*.log
+/log/
+
+# OS generated files #
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Node Files #
+/node_modules/
+/bower_components/
+npm-debug.log
+/npm-debug.log.*
+
+
+#Package#
+package-lock.json
+
+# IDE #
+.vscode/
