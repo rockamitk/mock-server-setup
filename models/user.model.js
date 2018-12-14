@@ -17,14 +17,15 @@ const UserSchema = new Schema({
  */
 UserSchema.statics = {
     get(id) {
-        return this.findById(id)
-            .then((object) => {
-                if (object) {return object;}
-                const err = new APIError("User does not exist.", httpStatus.NOT_FOUND);
-                return Promise.reject(err);
-            });
+        return this.findOne({_id: id, isActive: true})
+        .then((object) => {
+            if (object) {return object;}
+            const err = new APIError("User does not exist.", httpStatus.NOT_FOUND);
+            return Promise.reject(err);
+        });
     },
     select(query, fields) {
+        query.isActive = true;
         return this.find(query).select(fields).then(data => data);
     }
 };

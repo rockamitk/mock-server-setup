@@ -45,12 +45,12 @@ app.use((req, res, next)=>{
     if (!req.timedout) next();
 });
 
-/*
 app.use(JWT({secret: config.JWT_SECRET}).unless({
     path: [
+      '/api/v1/auth/signup',
+      '/api/v1/auth/login',
     ]})
 );
-*/
 
 //API URL
 app.use('/api', routes);
@@ -60,7 +60,7 @@ app.use(function(err, req, res, next) {
     console.log();
     if(!res.finished){
         console.log("Middileware error");
-        next(err);
+        return res.status(err.status).json({status: err.status, message: err.message});
     }
 });
 

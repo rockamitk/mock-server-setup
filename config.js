@@ -7,6 +7,7 @@ const config = {
     PORT: '27017',
     DB: 'mockup_db'
   },
+  TOKEN_DURATION: 60*60*24*10,//10days
   HASH_LEVEL: 8,//encryption has level,
   USER_TYPE: ["owner","admin"]
 };

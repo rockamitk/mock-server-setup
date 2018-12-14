@@ -19,7 +19,7 @@ const addProject = (req, res, next) => {
     
     project.labelName =  req.body.name;
     project.labelName = project.labelName.split(" ").join("").toLowerCase();
-    project.ownerId = mongoose.Types.ObjectId(req.body.ownerId);//res.locals.user._id; => get user object from token
+    project.ownerId = res.locals.user._id;// extract user(owner of project) object from token
     
     project.save().then(project => {
         return res.status(httpStatus.OK).json({
