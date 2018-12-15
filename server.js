@@ -4,7 +4,6 @@ const morgan= require('morgan');
 const bodyParser= require('body-parser');
 const cookieParser= require('cookie-parser');
 const compress= require('compression');
-const methodOverride= require('method-override');
 const cors= require('cors');
 const httpStatus= require('http-status');
 const helmet= require('helmet');
@@ -33,7 +32,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compress());//response compress
-app.use(methodOverride());
 app.use(helmet());// secure apps by setting various HTTP headers
 app.use(cors());// enable CORS - Cross Origin Resource Sharing
 app.use(morgan(':method :url :status :response-time ms :res[content-length] kb'));
@@ -45,10 +43,15 @@ app.use((req, res, next)=>{
     if (!req.timedout) next();
 });
 
+/**
+ * VALIDATE TOKEN
+ * Skip api, those are in path array
+ */
 app.use(JWT({secret: config.JWT_SECRET}).unless({
     path: [
       '/api/v1/auth/signup',
       '/api/v1/auth/login',
+      '/api/health-check'//Whether server is respond
     ]})
 );
 

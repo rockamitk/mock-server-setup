@@ -4,15 +4,14 @@ const APIError = require('../helpers/APIError');
 const httpStatus = require('http-status');
 
 const APISchema = new Schema({
-    name: {type: String,required: true},
-    labelName: {type: String, trim: true},
-    method: String,
-    version: {type: String, default: "v1"},
-    staticPath: {type: String, trim: true},
-    response: [Schema.Types.Mixed],
-    queryParams: Schema.Types.Mixed,
+    methodName: {type: String, required: true, trim: true},
+    path: {type: String, required: true, trim: true},
+    servicePath: {type: String, required: true, trim: true},
+    input: {type: String, trim: true},
+    output: {type: String, trim: true},
     ownerId: Schema.ObjectId,//ref UserModel._id
     projectId: Schema.ObjectId,//ref ProjectModel._id
+    accessUsers:[Schema.Types.ObjectId],//ref Other UserModel._id
     isActive: {type: Boolean, default: true}
 }, {timestamps: true});
 

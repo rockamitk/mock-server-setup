@@ -5,7 +5,7 @@ const httpStatus = require('http-status');
 
 const ProjectSchema = new Schema({
     name: {type: String,required: true},
-    labelName: {type: String, required: true, trim: true},
+    projectIdName: {type: String, required: true, trim: true},
     ownerId: Schema.ObjectId,//ref UserModel._id
     isActive: {type: Boolean, default: true}
 }, {timestamps: true});

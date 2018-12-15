@@ -36,10 +36,16 @@ router.use('*', (req, res, next) => {
     }
 });
 
-router.route('/create').post([
+router.route('/project/create').post([
     check('name', 'Project name has required.').exists()
     .matches(/^([0-9A-z\ \_\-]+)$/, 'g').withMessage("Project name has invalid characters")
-], Controllers.ProjectController.addProject);
+], Controllers.SettingsController.createProject);
+
+router.route('/mock/create').post([
+    check('projectIdName', 'Project id name has required.').exists()
+    .matches(/^([0-9A-z\ \_\-]+)$/, 'g').withMessage("Project name has invalid characters"),
+    check('mocks', 'Set of API details has required.').exists().isArray()
+], Controllers.SettingsController.createMockServices);
 
 /*
 router.route('/').get([

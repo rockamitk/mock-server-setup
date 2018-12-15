@@ -30,17 +30,9 @@ const addUser = (req, res, next) => {
         });
     }
 
-    //Validate phoneNo has int or chars
     let phoneNo = req.body.phoneNo;
     phoneNo = phoneNo.split(" ").join("");
-    if(isNaN(phoneNo)){
-        return res.status(httpStatus.BAD_REQUEST)
-        .json({ 
-            status:httpStatus.BAD_REQUEST, 
-            message:"Bad reuqest occured.", 
-            data:{phoneNo:"Phone number has invalid chars."} 
-        });
-    }
+
     //Check whether user exists or not, for input email & phone
     let query;
     if(req.body.email){
@@ -63,7 +55,7 @@ const addUser = (req, res, next) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: hashedPassword,
-                phoneNo: req.body.phoneNo,
+                phoneNo: phoneNo,
                 type: req.body.type
             });
             user.save()
