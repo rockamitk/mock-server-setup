@@ -1,3 +1,11 @@
+/**
+ * @author Amit Kumar Sah
+ * @email akamit400@mail.com
+ * @create date 2018-12-15 18:45:40
+ * @modify date 2018-12-15 18:45:40
+ * @desc [description]
+*/
+
 const httpStatus = require('http-status');
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcrypt');

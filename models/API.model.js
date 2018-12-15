@@ -1,3 +1,11 @@
+/**
+ * @author Amit Kumar Sah
+ * @email akamit400@mail.com
+ * @create date 2018-12-15 18:47:23
+ * @modify date 2018-12-15 18:47:23
+ * @desc [description]
+*/
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const APIError = require('../helpers/APIError');
