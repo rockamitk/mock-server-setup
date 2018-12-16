@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 ```
-Node, MongoDB
+Install Node, MongoDB
 ```
 
 ### Install
@@ -18,14 +18,32 @@ Node, MongoDB
 npm install
 ```
 
-And repeat
-
 ```
-until finished
+node server.js
 ```
-End with an example of getting some data out of the system or using it for a little demo
+#### For more details, read method's comments written settings.route.js 
+```
+[POST]/api/v1/settings/project/create.
+[POST]/api/v1/settings/mock/create.
+[GET]/api/v1/settings/mock/list.   
+[PUT]/api/v1/settings/mock/permission.
+```
+#### For more details, read method's comments written users.route.js 
+```
+/api/v1/users/get_list[GET]
+```
+#### For more details, read method's comments written auth.route.js 
+```
+[POST]/api/v1/auth/signup,
+[POST]/api/v1/auth/login,
+For more details, read method's comments written mock.route.js 
+[GET] /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
+[POST] /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
+[PUT /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
+[DELETE] /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
+```
 
-Characteristics:
+#### Characteristics:
 1.Admin (top level task) can :
   1.1 Register self, update his personal details & delete.
   1.2 Add, update, get list and delete user(type: ‘owner’ non-admin).
@@ -102,27 +120,3 @@ mock-server-setup
 `|---package.json` => App details & 3rd party dependencies along version
 `|---server.js`    => Application starter, bind route connect db, bind middleware
 
-Available APIs. 
-
-**For more details, read method's comments written settings.route.js 
-│ Method │ Path                             │
-│ POST   │ /api/v1/settings/project/create  │
-│ POST   │ /api/v1/settings/mock/create     │
-│ GET    │ /api/v1/settings/mock/list       │
-│ PUT    │ /api/v1/settings/mock/permission │
-
-**For more details, read method's comments written users.route.js 
-  │ Method │ Path                   │
-  │ GET    │ `/api/v1/users/get_list` │
-
-**For more details, read method's comments written auth.route.js 
-  │ Method │ Path                │
-  │ POST   │ `/api/v1/auth/signup` │
-  │ POST   │ `/api/v1/auth/login`  │
-
-**For more details, read method's comments written mock.route.js 
-  │ Method │ Path                                                │
-  │ GET    │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
-  │ POST   │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
-  │ PUT    │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
-  │ DELETE │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
