@@ -1,7 +1,31 @@
-# mock-server-setup
+# Mock Server Setup
+
 Application to setup dummy services(APIs) along for various project.
 
-Characteristics
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+```
+Node, MongoDB
+```
+
+### Install
+
+```
+npm install
+```
+
+And repeat
+
+```
+until finished
+```
+End with an example of getting some data out of the system or using it for a little demo
+
+Characteristics:
 1.Admin (top level task) can :
   1.1 Register self, update his personal details & delete.
   1.2 Add, update, get list and delete user(type: ‘owner’ non-admin).
@@ -18,11 +42,10 @@ Characteristics
   3.2 Suggest api `path`& `serviceName` for unique path. 
   3.3 Validate standard url path. 
   3.4 Prevent duplicate. 
-    ->API urls.
-    ->Project name at user level.
-    ->phone No, email(optional) used for login.
-    ->Query parameters for same methods (Optional).
-
+    `API urls.`
+    `Project name at user level.`
+    `phone No, email(optional) used for login.`
+    `Query parameters for same methods (Optional).`
   3.5 Mark soft delete for every records instead actual delete from database.
   3.5 Accept phone No or email(optional) as userId/username along with password.
   3.6 Switch user’s role by user type while login or extract token.
@@ -71,54 +94,35 @@ Schema Design
 Modular Application Structure
 mock-server-setup
 `|---controllers`	 => Set of methods, processing query, bind response
-|---helpers		 => Set of methods used globally
-|---models       => Declaration, initilisation schema
-|---routes	     => Bind API url to dedicated controller's method
-|---.gitignore	 => skip file, dir to push on git
-|---config.js	 => Having constant data required for app, ex: database, user role details
-|---package.json => App details & 3rd party dependencies along version
-|---server.js    => Application starter, bind route connect db, bind middleware
+`|---helpers`		 => Set of methods used globally
+`|---models`       => Declaration, initilisation schema
+`|---routes`	     => Bind API url to dedicated controller's method
+`|---.gitignore`	 => skip file, dir to push on git
+`|---config.js`	 => Having constant data required for app, ex: database, user role details
+`|---package.json` => App details & 3rd party dependencies along version
+`|---server.js`    => Application starter, bind route connect db, bind middleware
 
 Available APIs. 
 
 **For more details, read method's comments written settings.route.js 
-`┌────────┬──────────────────────────────────┐
 │ Method │ Path                             │
-├────────┼──────────────────────────────────┤
 │ POST   │ /api/v1/settings/project/create  │
-├────────┼──────────────────────────────────┤
 │ POST   │ /api/v1/settings/mock/create     │
-├────────┼──────────────────────────────────┤
 │ GET    │ /api/v1/settings/mock/list       │
-├────────┼──────────────────────────────────┤
 │ PUT    │ /api/v1/settings/mock/permission │
-└────────┴──────────────────────────────────┘`
 
 **For more details, read method's comments written users.route.js 
-┌────────┬────────────────────────┐
-│ Method │ Path                   │
-├────────┼────────────────────────┤
-│ GET    │ /api/v1/users/get_list │
-└────────┴────────────────────────┘
+  │ Method │ Path                   │
+  │ GET    │ `/api/v1/users/get_list` │
 
 **For more details, read method's comments written auth.route.js 
-┌────────┬─────────────────────┐
-│ Method │ Path                │
-├────────┼─────────────────────┤
-│ POST   │ /api/v1/auth/signup │
-├────────┼─────────────────────┤
-│ POST   │ /api/v1/auth/login  │
-└────────┴─────────────────────┘
+  │ Method │ Path                │
+  │ POST   │ `/api/v1/auth/signup` │
+  │ POST   │ `/api/v1/auth/login`  │
 
 **For more details, read method's comments written mock.route.js 
-┌────────┬─────────────────────────────────────────────────────┐
-│ Method │ Path                                                │
-├────────┼─────────────────────────────────────────────────────┤
-│ GET    │ /api/v1/mock/:ownerId/:projectIdName/:servicePath*? │
-├────────┼─────────────────────────────────────────────────────┤
-│ POST   │ /api/v1/mock/:ownerId/:projectIdName/:servicePath*? │
-├────────┼─────────────────────────────────────────────────────┤
-│ PUT    │ /api/v1/mock/:ownerId/:projectIdName/:servicePath*? │
-├────────┼─────────────────────────────────────────────────────┤
-│ DELETE │ /api/v1/mock/:ownerId/:projectIdName/:servicePath*? │
-└────────┴─────────────────────────────────────────────────────┘
+  │ Method │ Path                                                │
+  │ GET    │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
+  │ POST   │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
+  │ PUT    │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
+  │ DELETE │ `/api/v1/mock/:ownerId/:projectIdName/:servicePath*?` │
