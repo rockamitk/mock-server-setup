@@ -4,7 +4,7 @@ Application to setup dummy services(APIs) along for various project.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+Characteristics of the application has explained below. For more function's behavior, please read the comments, written on method's head in route, controllers etc. directories.
 
 ### Prerequisites
 
