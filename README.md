@@ -50,14 +50,14 @@ Schema Design
     isActive: {type: Boolean, default: true}//Mark soft deletion`
   
   2.Project
-     _id: ObjectId
+     `_id: ObjectId
     name: {type: String,required: true},(input by user)
     projectIdName: String,//Used in generic APIs path
     ownerId: Schema.ObjectId,//ref UserModel._id
-    isActive: {type: Boolean, default: true}
+    isActive: {type: Boolean, default: true}`
   
   3.API
-    _id: ObjectId
+    `_id: ObjectId
     methodName: {type: String},//GET, PUT, POST, DELETE
     path: {type: String},//api/mock/:ownerId/:projectIdName/:servicePath
     servicePath: {type: String},//:servicePath => at least 1 params, query
@@ -66,11 +66,11 @@ Schema Design
     ownerId: Schema.ObjectId,//ref UserModel._id
     projectId: Schema.ObjectId,//ref ProjectModel._id
     accessUsers:[Schema.Types.ObjectId],//ref Other UserModel._id
-    isActive: {type: Boolean, default: true}
+    isActive: {type: Boolean, default: true}`
 
 Modular Application Structure
 mock-server-setup
-|---controllers	 => Set of methods, processing query, bind response
+`|---controllers`	 => Set of methods, processing query, bind response
 |---helpers		 => Set of methods used globally
 |---models       => Declaration, initilisation schema
 |---routes	     => Bind API url to dedicated controller's method
