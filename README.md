@@ -3,10 +3,10 @@ Application to setup dummy services(APIs) along for various project.
 
 Characteristics
 1.Admin (top level task) can :
-  >Register self, update his personal details & delete.
-  >Add, update, get list and delete user(type: ‘owner’ non-admin)
-  >Can grant / revoke project & its service access to/from other users.
-  >Can behave as normal user also.
+  1.1 Register self, update his personal details & delete.
+  1.2 Add, update, get list and delete user(type: ‘owner’ non-admin).
+  1.3 Can grant / revoke project & its service access to/from other users.
+  1.4 Can behave as normal user also.
 
 2.User(‘owner’) :
   >Can create projects, became owner default.
@@ -39,6 +39,7 @@ Characteristics
     409 - Conflict (Duplicate user’s name, email and phone, project & API names)
 
 Schema Design
+
   1.Users
     _id: ObjectId //Used as ownerId generic APIs path
     phoneNo: {type: String,unique: true},//login username
