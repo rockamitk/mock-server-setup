@@ -24,30 +24,30 @@ Characteristics
     ->Query parameters for same methods (Optional).
 
   3.5 Mark soft delete for every records instead actual delete from database.
-  3.5Accept phone No or email(optional) as userId/username along with password.
-  >Switch user’s role by user type while login or extract token.
-  >Accept always token in headers to access APIs. (part of API throttling)
-  >Not allowed to access API even token is valid but user has deleted.(part of API throttling)
-  >Validate every time, active users, projects & mock services. 
-  >Response with various status code
-    200 - success
-    404 - API or data does not exist based on query params
-    401 - Unauthorized access(On invalid login, token expires and user deleted)
-    403 - Permission denied (Not allowed access by user)
-    500 - System error(Syntax error in App.)
-    503 - Timeout
-    409 - Conflict (Duplicate user’s name, email and phone, project & API names)
+  3.5 Accept phone No or email(optional) as userId/username along with password.
+  3.6 Switch user’s role by user type while login or extract token.
+  3.7 Accept always token in headers to access APIs. (part of API throttling).
+  3.8 Not allowed to access API even token is valid but user has deleted.(part of API throttling).
+  3.9 Validate every time, active users, projects & mock services. 
+  3.11 Response with various status code
+    `200` - success
+    `404` - API or data does not exist based on query params
+    `401` - Unauthorized access(`On invalid login, token expires and user deleted`).
+    `403` - Permission denied (`Not allowed access by user`).
+    `500` - System error(Syntax error in App.).
+    `503` - Timeout.
+    `409` - Conflict (Duplicate user’s name, email and phone, project & API names)
 
 Schema Design
 
   1.Users
-    _id: ObjectId //Used as ownerId generic APIs path
+   ` _id: ObjectId //Used as ownerId generic APIs path
     phoneNo: {type: String,unique: true},//login username
     name: {type: String, required: true, trim: true},
     email: {type: String, trim: true},//login username optional
     password: {type: String,required: true,trim: true},
     type: {type: String, default: "owner"},//type:[“admin”,”owner”]
-    isActive: {type: Boolean, default: true}//Mark soft deletion
+    isActive: {type: Boolean, default: true}//Mark soft deletion`
   
   2.Project
      _id: ObjectId
@@ -82,7 +82,7 @@ mock-server-setup
 Available APIs. 
 
 **For more details, read method's comments written settings.route.js 
-┌────────┬──────────────────────────────────┐
+`┌────────┬──────────────────────────────────┐
 │ Method │ Path                             │
 ├────────┼──────────────────────────────────┤
 │ POST   │ /api/v1/settings/project/create  │
@@ -92,7 +92,7 @@ Available APIs.
 │ GET    │ /api/v1/settings/mock/list       │
 ├────────┼──────────────────────────────────┤
 │ PUT    │ /api/v1/settings/mock/permission │
-└────────┴──────────────────────────────────┘
+└────────┴──────────────────────────────────┘`
 
 **For more details, read method's comments written users.route.js 
 ┌────────┬────────────────────────┐
