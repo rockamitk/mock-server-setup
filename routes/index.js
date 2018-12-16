@@ -35,6 +35,6 @@ router.use('/v1/auth', authRoute);
  * Due to inner paths are generics. 
  * For ex: `/api/mock/user._id/projectIdName/serviceName?*
 */
-router.use('/mock', mockRoute);//:userId===UserModel._id
+router.use('/mock', mockRoute);
 
 module.exports = router;

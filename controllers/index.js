@@ -8,7 +8,8 @@
 
 const UserController = require('./user.controller');
 const SettingsController = require('./settings.controller');
+const MockController = require('./mock.controller');
 
 module.exports = {
-	UserController, SettingsController
+	UserController, SettingsController, MockController
 };

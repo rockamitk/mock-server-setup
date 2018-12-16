@@ -69,6 +69,7 @@ const addUser = (req, res, next) => {
             user.save()
                 .then(user => {
                     let obj = {};
+                    obj.userId =  user._id;
                     obj.email = user.email;
                     obj.name = user.name;
                     obj.phoneNo = user.phoneNo;

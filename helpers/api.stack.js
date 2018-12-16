@@ -6,12 +6,11 @@
  * @desc [description]
 */
 
-module.exports =  function (baseUrl, routes) {
+module.exports =  function (baseUrl, routes, file) {
     const Table = require('cli-table');
-    let table = new Table({ head: ["", "Path"] });
-    console.log('\nAPI for ' + baseUrl);
-    console.log('\n********************************************');
+    let table = new Table({ head: ["Method", "Path"] });
 
+    console.log(`Availbale APIs on ${file}`);
     for (let key in routes) {
         if (routes.hasOwnProperty(key)) {
             let val = routes[key];
@@ -20,11 +19,12 @@ module.exports =  function (baseUrl, routes) {
             if(val.route) {
                 val = val.route;
                 let _o = {};
-                _o[val.stack[0].method]  = [baseUrl + val.path];    
+                _o[val.stack[0].method.toUpperCase()]  = [baseUrl + val.path];    
                 table.push(_o);
             }       
         }
     }
     console.log(table.toString());
+    // console.log();
     return table;
 };

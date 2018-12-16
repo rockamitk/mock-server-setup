@@ -2,12 +2,14 @@
  * @author Amit Kumar Sah
  * @email akamit400@mail.com
  * @create date 2018-12-15 18:35:16
- * @modify date 2018-12-15 18:35:16
+ * @modify date 2018-12-16 14:17:23
  * @desc [description]
 */
 
 const httpStatus = require('http-status');
 const { check, validationResult } = require('express-validator/check');
+const mongoose = require('mongoose');
+
 const APIError = require('../helpers/APIError');
 const models = require('../models');
 const ProjectModel = models.ProjectModel;
@@ -106,7 +108,7 @@ const createMockServices = (req, res, next) => {
         let path;//buildAPIpath => multiple times has used
         if(!project){
             //return to client
-            res.status(httpStatus.NOT_FOUND).json({ status: httpStatus.NOT_FOUND, message:"Bad Request occured.", data });
+            res.status(httpStatus.NOT_FOUND).json({ status: httpStatus.NOT_FOUND, message:"Not found.", data:{projectIdName: "Project does not is exists."} });
             //Early break promise chain
             throw new Error("Project does not is exists.");
         }
@@ -190,6 +192,172 @@ const createMockServices = (req, res, next) => {
     });
 };
 
+/**
+ * Get list of mock services
+ * @param projectIdName: req.queury.projectIdName
+ */
+const getMockeServiceList = (req, res, next) => {
+    //Using 3rd party Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        let er= errors.mapped();
+        let data = {};
+        if(er.projectIdName) {data.projectIdName = er.projectIdName.msg;}
+        return res.status(httpStatus.BAD_REQUEST).json({ status: httpStatus.BAD_REQUEST, message:"Bad Request occured.", data });
+    }
+
+    
+    let query = {isActive:true};
+    //optional
+    if(req.query.projectIdName){
+        query.projectIdName = req.query.projectIdName.split(" ").join("").toLowerCase();
+    }
+    //fetch only project._id
+    ProjectModel.select(query, {_id:1, projectIdName:1})//call custom method
+    .then(projectList =>{
+        if(projectList.length == 0){
+            //return blank list
+            res.status(httpStatus.OK).json({ status: httpStatus.OK, message:"No active project exists", data: []});
+            //Early break promise chain
+            throw new Error("No active project has exists.");
+        }
+        query = {isActive:true};
+        //Check user type== admin or other
+        if(res.locals.user.type !== "admin"){
+            //user can be either owner or others
+            query["$or"] = [{ownerId: res.locals.user._id}, {accessUsers: res.locals.user._id}];
+        }
+        let projectIds =[];
+        projectList.forEach(project=> projectIds.push(project._id));
+        //projectIds has list of active projects
+        query.projectId = {$in: projectIds};
+        //Trigger API applying query
+        return APIModel.find(query).then(apis => [apis, projectList]);
+    })
+    .then(([apis, projectList]) =>{
+        console.log(apis.length + " mock services has fetched." );
+        //return only important data
+        apis = apis.map(api => {
+            let project = projectList.find(project => project._id.equals(api.projectId));
+            return {
+                projectIdName: project ? project.projectIdName : null,
+                path: api.path, 
+                method: api.methodName, 
+                servicePath: api.servicePath,
+                ownerId: api.ownerId
+            };
+        });
+        return res.status(httpStatus.OK).json({ status: httpStatus.OK, 
+            message: "List of available mock services, can by trigger standalone", 
+            data: apis
+        });
+        /**---------------------End--------------------- */
+    })
+    .catch(e =>{
+        console.log(e);
+        const err = new APIError(e.message, e.status, true);
+        next(err);
+    });
+};
+
+/**
+ * Allow api access permissions to others
+ * Can be triggered by only admin user's credentials
+ * At least one recipient user._id has required
+ * Avaialabel mathod will be POST, PUT, GET, DELETE
+ */
+const permitOtherUsersAccess = (req, res, next) => {
+    //User access verified
+    if(res.locals.user.type !== "admin"){
+        return res.status(httpStatus.FORBIDDEN)
+        .json({ status: httpStatus.FORBIDDEN, 
+            message: "Access denied", 
+            data : "Login-ed user has not allowed."
+        });
+    }
+
+    //Using 3rd party, params Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        let er= errors.mapped();
+        let data = {};
+        if(er.projectIdName) {data.projectIdName = er.projectIdName.msg;}
+        if(er.users) {data.users = er.users.msg;}
+        if(er.methods) {data.methods = er.methods.msg;}
+        return res.status(httpStatus.BAD_REQUEST).json({ status: httpStatus.BAD_REQUEST, message:"Bad Request occured.", data });
+    }
+
+
+    //Minimum methods & users length check
+    if(req.body.methods.length === 0 || req.body.users.length === 0){
+        return res.status(httpStatus.BAD_REQUEST)
+        .json({ status: httpStatus.BAD_REQUEST, 
+            message:"Bad Request occured.", 
+            data : "List users and methods must contains least one."
+        });
+    }
+
+    let projectIdName = req.body.projectIdName.split(" ").join("").toLowerCase();
+
+    let methods = [];//Filter & formatting
+    req.body.methods.forEach(method => {
+        method = method.toUpperCase();
+        if(config.CRUD.includes(method))
+        methods.push(method);
+    });
+
+    let userIds = [];//convert string to ObjectId
+    req.body.users.forEach(userId => {
+        try{
+            let objectId = mongoose.Types.ObjectId(userId);
+            console.log(objectId);
+            userIds.push(objectId);    
+        }catch(e){
+            console.log(e)    
+        }
+    });
+
+    /** Sequential Query from various collections using promise chain */
+    ProjectModel.findOne({projectIdName: projectIdName, isActive:true})
+    .then(project =>{
+        if(!project){
+            //return to client
+            res.status(httpStatus.NOT_FOUND).json({ status: httpStatus.NOT_FOUND, message:"Not found.", data:{projectIdName: "Project does not is exists."} });
+            //Early break promise chain
+            throw new Error("Project does not is exists.");
+        }
+        console.log(`projectId: ${project._id} for projectIdName: ${projectIdName}`);
+
+        let query = {projectId: project._id, isActive:true};
+        query.methodName = {$in : methods};
+        return APIModel.updateMany(query, {
+            '$addToSet': {//insert only unique userId
+                accessUsers: {
+                    '$each': userIds// traverse each id from userIds
+                }
+            }
+        }).then(response => response);
+    })
+    .then(response =>{
+        console.log(response);
+        return res.status(httpStatus.OK).json({ status: httpStatus.OK, 
+            message: "Query execute successfully", 
+            data: {
+                totalMockServices: response.nModified,
+                message: "Executed successfully.",
+                methods,
+                users:userIds
+            }
+        });
+        /* -----------------DONE --------------------*/
+    })
+    .catch(e =>{
+        console.log(e);
+        const err = new APIError(e.message, e.status, true);
+        next(err);
+    });
+};
+
 module.exports = {
-    createProject, createMockServices
+    createProject, createMockServices, getMockeServiceList, permitOtherUsersAccess
 };

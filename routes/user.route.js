@@ -51,4 +51,8 @@ router.route('/').get([
     check('', '.').exists()
 ], MController.method);
 */
+
+//print available API on terminal
+require('../helpers/api.stack')('/api/v1/users', router.stack, "User router.");
+
 module.exports = router;

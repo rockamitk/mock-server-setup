@@ -30,7 +30,7 @@ const routes= require('./routes');
 const logDir = './log';
 
 if (!fs.existsSync(logDir)){
-    fs.mkdirSync(logDir);
+  fs.mkdirSync(logDir);
 }
 
 const app = express();
@@ -59,7 +59,7 @@ app.use(JWT({secret: config.JWT_SECRET}).unless({
     path: [
       '/api/v1/auth/signup',
       '/api/v1/auth/login',
-      '/api/health-check'//Whether server is respond
+      '/api/health-check'//Is server is running
     ]})
 );
 
@@ -116,11 +116,9 @@ mongoose.connection.on('reconnected', function () {
 });
 
 mongoose.connect(mongoUri, conOptions, ()=>{
-  console.info("mongodb has connected !!");
+  console.log("Database has connected.");
   app.listen(config.PORT, function() {
-      console.info('Server has running,  PORT:' + config.PORT);
-      console.log(`Process id ${process.pid} `);
-      // require('../helpers/api.stack')('/api/projects', router.stack);
+      console.log(`Server has started on PORT ${config.PORT}, sys. process id ${process.pid}`);
   });
 });
 

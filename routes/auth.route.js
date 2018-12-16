@@ -86,6 +86,7 @@ router.route('/login').post([
             status: httpStatus.OK,
             message: "Valid credentials",
             data : {
+                userId: user._id,
                 token: config.AUTH_SCHEME +' '+ token,//set Headers.Authorization for APIs access
                 name: user.name,
                 phoneNo: user.phoneNo,
@@ -99,5 +100,7 @@ router.route('/login').post([
         next(err);
     });
 });
+//print available API on terminal
+require('../helpers/api.stack')('/api/v1/auth', router.stack, "auth router");
 
 module.exports = router;

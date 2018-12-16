@@ -45,40 +45,31 @@ router.use('*', (req, res, next) => {
 });
 
 
-router.route('/:userId/:projectIdName/:servicePath*?').get([
-    check('userId', 'userId has required.').exists(),
-    check('projectName', 'projectName has required.').exists(),
-    check('servicePath', 'servicePath has required.').exists()
-], (req, res, next)=>{
-    console.log("Hello");
-    return res.json({status: 200, data:""});
-});
+router.route('/:ownerId/:projectIdName/:servicePath*?').get([
+    check('ownerId', 'Project\'s owner id has required.').exists(),
+    check('projectIdName', 'Project name has required.').exists(),
+    check('servicePath', 'Service path has required.').exists()
+], Controllers.MockController.getGenericMockData);
 
-router.route('/:userId/:projectIdName/:servicePath*?').post([
-    check('phoneNo', 'Register phone no. has required.').exists(),
-    check('projectName', 'projectName has required.').exists(),
-    check('servicePath', 'servicePath has required.').exists()
-], (req, res, next)=>{
-    console.log("POST ");
-    return res.json({status: 200, data:"POST"});
-});
+router.route('/:ownerId/:projectIdName/:servicePath*?').post([
+    check('ownerId', 'Project\'s owner id has required.').exists(),
+    check('projectIdName', 'Project name has required.').exists(),
+    check('servicePath', 'Service path has required.').exists()
+], Controllers.MockController.getGenericMockData);
 
-router.route('/:userId/:projectIdName/:servicePath*?').put([
-    check('phoneNo', 'Register phone no. has required.').exists(),
-    check('projectName', 'projectName has required.').exists(),
-    check('servicePath', 'servicePath has required.').exists()
-], (req, res, next)=>{
-    console.log("PUT");
-    return res.json({status: 200, data:"PUT"});
-});
+router.route('/:ownerId/:projectIdName/:servicePath*?').put([
+    check('ownerId', 'Project\'s owner id has required.').exists(),
+    check('projectIdName', 'Project name has required.').exists(),
+    check('servicePath', 'Service path has required.').exists()
+], Controllers.MockController.getGenericMockData);
 
-router.route('/:userId/:projectIdName/:servicePath*?').delete([
-    check('phoneNo', 'Register phone no. has required.').exists(),
-    check('projectName', 'projectName has required.').exists(),
-    check('servicePath', 'servicePath has required.').exists()
-], (req, res, next)=>{
-    console.log("DELETE");
-    return res.json({status: 200, data:"DELETE"});
-});
+router.route('/:ownerId/:projectIdName/:servicePath*?').delete([
+    check('ownerId', 'Project\'s owner id has required.').exists(),
+    check('projectIdName', 'Project name has required.').exists(),
+    check('servicePath', 'Service path has required.').exists()
+], Controllers.MockController.getGenericMockData);
+
+//print available API on terminal
+require('../helpers/api.stack')('/api/v1/mock', router.stack, "mock router, generic paths");
 
 module.exports = router;
