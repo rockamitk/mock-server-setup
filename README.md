@@ -9,22 +9,22 @@ Characteristics
   1.4 Can behave as normal user also.
 
 2.User(‘owner’) :
-  >Can create projects, became owner default.
-  >Can add, update, delete, get services mocks (APIs).
-  >Can receive  `output` as response along various HTTP status code depends execution state.
+  2.2 Can create projects, became owner default.
+  2.2 Can add, update, delete, get services mocks (APIs).
+  2.2 Can receive  `output` as response along various HTTP status code depends execution state.
 
-3.System(Application) will
-  >Suggest `projectIdName` from project’s name inputted by user.
-  >Suggest api `path`& `serviceName` for unique path.
-  >Validate standard url path.
-  >Prevent duplicate
+3.System(Application) will :
+  3.1 Suggest `projectIdName` from project’s name inputted by user.
+  3.2 Suggest api `path`& `serviceName` for unique path. 
+  3.3 Validate standard url path. 
+  3.4 Prevent duplicate. 
     ->API urls.
     ->Project name at user level.
     ->phone No, email(optional) used for login.
-    ->Query parameters for same methods (Optional)
+    ->Query parameters for same methods (Optional).
 
-  >Mark soft delete for every records instead actual delete from database.
-  >Accept phone No or email(optional) as userId/username along with password.
+  3.5 Mark soft delete for every records instead actual delete from database.
+  3.5Accept phone No or email(optional) as userId/username along with password.
   >Switch user’s role by user type while login or extract token.
   >Accept always token in headers to access APIs. (part of API throttling)
   >Not allowed to access API even token is valid but user has deleted.(part of API throttling)
