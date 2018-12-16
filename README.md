@@ -17,33 +17,27 @@ Install Node, MongoDB
 ```
 npm install
 ```
-
+#### Run
 ```
 node server.js
 ```
-#### For more details, read method's comments written settings.route.js 
+#### Available APIs 
 ```
 [POST]/api/v1/settings/project/create.
 [POST]/api/v1/settings/mock/create.
 [GET]/api/v1/settings/mock/list.   
 [PUT]/api/v1/settings/mock/permission.
-```
-#### For more details, read method's comments written users.route.js 
-```
-/api/v1/users/get_list[GET]
-```
-#### For more details, read method's comments written auth.route.js 
-```
+[GET]/api/v1/users/get_list
 [POST]/api/v1/auth/signup,
 [POST]/api/v1/auth/login,
-For more details, read method's comments written mock.route.js 
 [GET] /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
 [POST] /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
 [PUT /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
 [DELETE] /api/v1/mock/:ownerId/:projectIdName/:servicePath? │
+
 ```
 
-#### Characteristics:
+#### Characteristics
 ```
 1.Admin (top level task) can :
   1.1 Register self, update his personal details & delete.
@@ -79,16 +73,17 @@ For more details, read method's comments written mock.route.js
     500 - System error(Syntax error in App.).
     503 - Timeout.
     409 - Conflict (Duplicate user’s name, email and phone, project & API names)
+```
 
-
-Modular Application Structure
+#### Modular Application Structure
+```
 mock-server-setup
 |---controllers	 => Set of methods, processing query, bind response
-|---helpers		 => Set of methods used globally
+|---helpers		   =>   Set of methods used globally
 |---models       => Declaration, initilisation schema
 |---routes	     => Bind API url to dedicated controller's method
 |---.gitignore	 => skip file, dir to push on git
-|---config.js	 => Having constant data required for app, ex: database, user role details
+|---config.js	   => Having constant data required for app, ex: database, user role details
 |---package.json => App details & 3rd party dependencies along version
 |---server.js    => Application starter, bind route connect db, bind middleware
 
