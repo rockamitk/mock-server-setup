@@ -47,7 +47,7 @@ const getGenericMockData = (req, res, next) => {
             //Early break promise chain
             throw new Error("No active project has exists.");
         }
-        console.log(`Project ${project.projectIdName} is active`);
+        console.log(`Project: ${project.projectIdName} is active`);
         const urlObj = url.parse(req.originalUrl);
         //Get data on path, methodName
         return APIModel.findOne({path: urlObj.pathname, methodName: req.method, isActive:true}).then(api => [api, project]);
@@ -64,22 +64,24 @@ const getGenericMockData = (req, res, next) => {
         let output = api.output;
         try {
             output = JSON.parse(api.output);
-            console.log(output);
+            console.log("Output: ",output);
         } catch (e) {
             console.log(`Can't parse output for path ${api.path}`);
         }
 
-        if(api.ownerId.equals(res.locals.user._id) || api.accessUsers.indexOf(res.locals.user._id) != -1){
+        if(res.locals.user.type === "admin" || api.ownerId.equals(res.locals.user._id) || api.accessUsers.indexOf(res.locals.user._id) != -1){
             //login ed user has authorized access
             return res.status(httpStatus.OK).json({ status: httpStatus.OK, 
-                message: "Executed successfully.",
+                message: "Mock service executed successfully.",
                 data: output
             });
         }else{
             //login ed user hasn't authorized access.
             return res.status(httpStatus.FORBIDDEN).json({ status: httpStatus.FORBIDDEN, 
                 message: "Access denied.",
-                data: {}
+                data: {
+                    message: "User access has denied."
+                }
             });
         }
         /**---------------------End--------------------- */

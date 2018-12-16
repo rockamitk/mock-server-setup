@@ -92,6 +92,46 @@ const addUser = (req, res, next) => {
     });
 };
 
+/**
+ * Get the list owners
+ * access by admin
+ * Can be used grant permission for mock services as others 
+ */
+const getOwnerList = (req, res, next) => {
+    //User access verified
+    if(res.locals.user.type !== "admin"){
+        return res.status(httpStatus.FORBIDDEN)
+        .json({ status: httpStatus.FORBIDDEN, 
+            message: "Access denied", 
+            data : "Login-ed user has not allowed."
+        });
+    }
+    
+    UserModel.find({type:"owner", isActive:true})
+    .then(userList =>{
+        //return only important data
+        userList = userList.map(user => {
+            return {
+                userId:  user._id,
+                email: user.email,
+                name: user.name,
+                phoneNo: user.phoneNo,
+                type: user.type,
+            };
+        });
+        return res.status(httpStatus.OK).json({ status: httpStatus.OK, 
+            message: "List of active users", 
+            data: userList
+        });
+        /**---------------------End--------------------- */
+    })
+    .catch(e =>{
+        console.log(e);
+        const err = new APIError(e.message, e.status, true);
+        next(err);
+    });
+};
+
 module.exports = {
-    addUser
+    addUser, getOwnerList
 };

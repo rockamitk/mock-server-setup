@@ -120,7 +120,7 @@ const createMockServices = (req, res, next) => {
             if(mock.servicePath[0] !== "/"){
                 mock.servicePath = `/${mock.servicePath}`;
             }
-            path = `/mock/${res.locals.user._id.toString()}/${project.projectIdName}${mock.servicePath}`; 
+            path = `/api/mock/${res.locals.user._id.toString()}/${project.projectIdName}${mock.servicePath}`; 
             pathsWithMethod.push({path, methodName: mock.method.toUpperCase()});
         });
         let query = {isActive:true};
@@ -144,7 +144,7 @@ const createMockServices = (req, res, next) => {
 
         let docArray = [], input, output;
         req.body.mocks.forEach(mock => {
-            path = `/mock/${res.locals.user._id.toString()}/${project.projectIdName}${mock.servicePath}`; 
+            path = `/api/mock/${res.locals.user._id.toString()}/${project.projectIdName}${mock.servicePath}`; 
 
             input = mock.input ? mock.input : null;
             if(input && (typeof input === "object" || Array.isArray(input))){
@@ -180,7 +180,7 @@ const createMockServices = (req, res, next) => {
             return {path: api.path, method: api.methodName, servicePath: api.servicePath};
         });
         return res.status(httpStatus.OK).json({ status: httpStatus.OK, 
-            message: "APIs path already exists.", 
+            message: "Mock services has created.", 
             data: apis
         });
         /* -----------------DONE --------------------*/

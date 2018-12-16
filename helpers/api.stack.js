@@ -25,6 +25,6 @@ module.exports =  function (baseUrl, routes, file) {
         }
     }
     console.log(table.toString());
-    // console.log();
+    console.log();
     return table;
 };

@@ -45,12 +45,13 @@ router.use('*', (req, res, next) => {
     }
 });
 
-/*
-router.route('/').get([
-    check('', '.').exists(),
-    check('', '.').exists()
-], MController.method);
-*/
+/**
+ * Get the list owners
+ * access by admin
+ * Can be used grant permission for mock services as others 
+ */
+router.route('/get_list').get([
+], Controllers.UserController.getOwnerList);
 
 //print available API on terminal
 require('../helpers/api.stack')('/api/v1/users', router.stack, "User router.");

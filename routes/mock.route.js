@@ -30,6 +30,7 @@ router.use('*', (req, res, next) => {
                     _id: user._id,
                     type: user.type
                 }
+                console.log("\nLogin user details:", res.locals.user, "name:"+ user.name);
                 next();
             }else{
                 return res.status(httpStatus.FORBIDDEN).json({ status:httpStatus.FORBIDDEN, 
