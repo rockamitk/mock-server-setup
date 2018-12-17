@@ -50,7 +50,7 @@ const getGenericMockData = (req, res, next) => {
         console.log(`Project: ${project.projectIdName} is active`);
         const urlObj = url.parse(req.originalUrl);
         //Get data on path, methodName
-        return APIModel.findOne({path: urlObj.pathname, methodName: req.method, isActive:true}).then(api => [api, project]);
+        return APIModel.findOne({path: urlObj.path, methodName: req.method, isActive:true}).then(api => [api, project]);
     })
     .then(([api, project]) =>{
         if(!api){
