@@ -6,22 +6,21 @@ Application to setup dummy services(APIs) along for various project.
 
 Characteristics of the application has explained below. For more function's behavior, please read the comments, written on method's head in route, controllers etc. directories.
 
-### Prerequisites
+### External source
+[ Mock server setup docx : Requirements, design](https://docs.google.com/document/d/173O0AIG5oDUZuaC2dzr-SxWTc796Zqb1EifC-sKjhwc/edit?usp=sharing)
+[ Video-Installation guide, sign up & in, create project, mock services, etc.](https://drive.google.com/file/d/1k8kASh6EGs_sAHehlvfXFm_GFQuTTNeI/view?usp=sharing)
+[Video-Admin's features, code explanation, etc.](https://drive.google.com/file/d/1gCOwuq_ENbOYDbIVHqtF2Byy17VfyqjJ/view?usp=sharing)
 
-```
-Install Node, MongoDB
-```
-
-### Install
+#### Install
 
 ```
 npm install
 ```
-#### Run
+##### Run
 ```
 node server.js
 ```
-#### Available APIs 
+##### Available APIs 
 ```
 [POST]/api/v1/settings/project/create.
 [POST]/api/v1/settings/mock/create.
